@@ -29,11 +29,7 @@ const Upload: FC = () => {
             .then(data => {
                 toast.success('Successfully Uploaded to db!')
                 console.log(data);
-                // reload page after 2 sec
-                setTimeout(() => {
-                    window.location.reload();
-                }
-                    , 2000);
+
             })
             .catch(error => {
                 toast.error('Something went wrong!')
