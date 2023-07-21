@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react'
 import { toast } from 'react-hot-toast';
+import StockAreaChart from './Chart';
 
 interface TableProps {
 
@@ -31,6 +32,8 @@ const Table: FC<TableProps> = async({ }) => {
 
 
     return (
+        <>
+        <StockAreaChart all_stock={all_stocks}/>
         <div className="overflow-x-auto">
             <table className="table table-xs">
                 <thead>
@@ -64,6 +67,7 @@ const Table: FC<TableProps> = async({ }) => {
                 </tbody>
             </table>
         </div>
+        </>
     )
 }
 

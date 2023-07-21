@@ -46,12 +46,12 @@ const Upload: FC<UploadProps> = ({}) => {
           <div className="card-body">
             <h2 className="card-title mb-5">Upload</h2>
             <form className="flex flex-col gap-5" onSubmit={onSubmitHandler}>
-              <input type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"  className="file-input file-input-bordered w-full max-w-xs" />
+              <input type="file"  accept=".csv"  className="file-input file-input-bordered w-full max-w-xs" />
               
-              <button className="btn btn-neutral" type="submit">Upload</button>
+              <button className="btn btn-outline" type="submit">Upload</button>
 
             </form>
-              <button   className="btn btn-neutral" onClick={testFetch}>Test DB</button>
+              {/* <button   className="btn btn-outline" onClick={testFetch}>Test DB</button> */}
           </div>
         </div>
       </div>
