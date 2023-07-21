@@ -22,6 +22,7 @@ docs.zip
 archive.zip
 .env
 HINDALCO_1D.xlsx
+HINDALCO_1D.csv
 
 # vim temporary files
 *~
