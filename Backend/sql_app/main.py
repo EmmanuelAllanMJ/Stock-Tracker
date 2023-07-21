@@ -1,5 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
+
 import csv
 
 from . import crud, models, schemas
@@ -8,6 +10,16 @@ from .database import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Dependency
 def get_db():
@@ -34,7 +46,7 @@ def get_stock_by_id(stock_id: int, db: Session = Depends(get_db)):
     return db_stock
 
 @app.post("/stocks/", response_model=schemas.Stock)
-async def create_stock(stock: schemas.StockCreate, file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def create_stock(file: UploadFile = File(...), db: Session = Depends(get_db)):
         # Read the contents of the CSV file
     contents = await file.read()
 
@@ -71,7 +83,8 @@ async def create_stock(stock: schemas.StockCreate, file: UploadFile = File(...),
         stock_data.append(stock_item)
 
     # Create the stock object in the database
-    db_stock = crud.create_stock(db=db, stock=stock)
+    print(stock_data[:10])
+    db_stock = crud.create_stock(db=db, stock=stock_data)
 
     return db_stock
 
@@ -85,11 +98,19 @@ def delete_stock(stock_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Stock not found")
     return db_stock
 
+@app.delete("/stocks/", response_model=schemas.Stock)
+def delete_all_stock(db: Session = Depends(get_db)):
+    db_stock = crud.delete_all_stock(db=db)
+    if db_stock is None:
+        raise HTTPException(status_code=404, detail="Stock not found")
+    return db_stock
+
 @app.put("/stocks/{stock_id}", response_model=schemas.Stock)
 def update_stock(stock_id: int, stock: schemas.StockCreate, db: Session = Depends(get_db)):
     db_stock = crud.update_stock(db=db, stock_id=stock_id, stock=stock)
     if db_stock is None:
         raise HTTPException(status_code=404, detail="Stock not found")
     return db_stock
+
 
 # uvicorn main:app --reload
