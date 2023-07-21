@@ -45,7 +45,7 @@ def get_stock_by_id(stock_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Stock not found")
     return db_stock
 
-@app.post("/stocks/", response_model=schemas.Stock)
+@app.post("/stocks/")
 async def create_stock(file: UploadFile = File(...), db: Session = Depends(get_db)):
         # Read the contents of the CSV file
     contents = await file.read()
@@ -98,7 +98,7 @@ def delete_stock(stock_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Stock not found")
     return db_stock
 
-@app.delete("/stocks/", response_model=schemas.Stock)
+@app.delete("/stocks/")
 def delete_all_stock(db: Session = Depends(get_db)):
     db_stock = crud.delete_all_stock(db=db)
     if db_stock is None:

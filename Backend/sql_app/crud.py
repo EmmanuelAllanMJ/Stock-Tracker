@@ -23,32 +23,8 @@ def create_stock(db: Session, stock: List[schemas.StockCreate]):
             instrument = i['instrument']
         )
         db.add(db_stock)
-    # db.commit()
-    # db.refresh(db_stock)
-    # return db_stock
-    
-    # insert first entry of the list
-    # db_stock = models.Stock(
-    #     datetime = stock[0]['datetime'],
-    #     close = stock[0]['close'],
-    #     high = stock[0]['high'],
-    #     low = stock[0]['low'],
-    #     open = stock[0]['open'],
-    #     volume = stock[0]['volume'],
-    #     instrument = stock[0]['instrument']
-    # )
-
-    # give sample value to db_stock
-    # db_stock = models.Stock(
-    #     datetime = "2021-01-01",
-    #     close = "1",
-    #     high = "1",
-    #     low = "1",
-    #     open = "1",
-    #     volume = "1",
-    #     instrument = "1"
-    # )
-    db.add(db_stock)
+        db.commit()
+    # db.add(db_stock)
     db.commit()
     db.refresh(db_stock)
     return stock

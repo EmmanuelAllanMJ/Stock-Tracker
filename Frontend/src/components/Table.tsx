@@ -17,18 +17,20 @@ interface Stock {
     instrument: string
 }
 
-const Table: FC<TableProps> = async({ }) => {
 
-    const all_stocks = await fetch('http://127.0.0.1:8000/stocks')
+
+const Table: FC<TableProps> = async({ }) => {
+    const all_stocks:Stock[] = await fetch('http://127.0.0.1:8000/stocks',{ cache: 'no-store' })
         .then(response => response.json())
         .then(data => {
-            // console.log(data);
+            console.log("Number of stocks",data.length);
             return data;
         })
         .catch(error => {
             console.error(error);
-            toast.error('Something went wrong!')
-        })
+            // toast.error('Something went wrong!')
+        }) 
+
 
 
     return (

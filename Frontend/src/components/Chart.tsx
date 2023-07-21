@@ -59,18 +59,14 @@ const StockAreaChart = ({ all_stock} : {all_stock:Stock[]}) => {
     };
   
     return (
-      <div className=" bg-gray-100">
         <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-3/4 p-4">
+          <div className="w-full 4 p-4">
             <div className="bg-white rounded-lg shadow-lg p-4">
               <Line data={chartData} options={chartOptions} />
             </div>
           </div>
-          <div className="w-full md:w-1/4 p-4">
-            {/* Render other components or content here */}
-          </div>
+
         </div>
-      </div>
     );
   };
   
